@@ -55,11 +55,12 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
+
       ),
       body: Consumer(builder: (context, ref, _) {
         final btnState = ref.watch(buttonStateProvider);
         return Container(
-          color: btnState ? Colors.white : Colors.red[50],
+          color: btnState ? Colors.white : Colors.red[100],
           child: Center(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,

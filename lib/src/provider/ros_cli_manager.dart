@@ -50,7 +50,7 @@ class RosCliManager {
     await Future.delayed(const Duration(seconds: 1));
     await cpuTemperatureTopic?.subscribe(cpuSubscribeHandler);
     await gpuTemperatureTopic?.subscribe(gpuSubscribeHandler);
-    await buttonTopic?.subscribe(gpuSubscribeHandler);
+    await buttonTopic?.subscribe(buttonSubscribeHandler);
   }
 
   Future<void> buttonSubscribeHandler(Map<String, dynamic> msg) async {
