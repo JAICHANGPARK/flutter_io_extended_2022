@@ -46,6 +46,7 @@ class RosCliManager {
     debugPrint(msgReceived);
     final tempMsg = RosTemperatureMsg.fromJson(msg);
     ref(cpuTempData.notifier).state = tempMsg.temperature ?? 0.0;
+    ref(cpuDateTime.notifier).state = tempMsg.header?.stamp?.nanosec ?? 0;
     // setState(() {});
   }
 
