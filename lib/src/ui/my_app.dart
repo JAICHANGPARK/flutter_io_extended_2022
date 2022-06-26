@@ -68,89 +68,93 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            Consumer(builder: (context, ref, _) {
-              final cpu = ref.watch(cpuTempData);
-              final time = ref.watch(cpuDateTime);
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text(
-                    "CPU 온도",
-                    style: TextStyle(
-                      fontSize: 32,
-                    ),
-                  ),
-                  Text(
-                    "$cpu C",
-                    style: const TextStyle(
-                      fontSize: 48,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    "$time nano second",
-                    style: const TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  PrettyGauge(
-                    gaugeSize: 200,
-                    segments: [
-                      GaugeSegment('Low', 30, Colors.green),
-                      GaugeSegment('Medium', 50, Colors.orange),
-                      GaugeSegment('High', 80, Colors.red),
-                    ],
-                    currentValue: cpu,
-                    displayWidget: const Text(
-                      'Jetson CPU',
+            Expanded(
+              child: Consumer(builder: (context, ref, _) {
+                final cpu = ref.watch(cpuTempData);
+                final time = ref.watch(cpuDateTime);
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text(
+                      "CPU 온도",
                       style: TextStyle(
-                        fontSize: 12,
+                        fontSize: 32,
                       ),
                     ),
-                  ),
-                ],
-              );
-            }),
+                    Text(
+                      "$cpu C",
+                      style: const TextStyle(
+                        fontSize: 48,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      "$time nano second",
+                      style: const TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    PrettyGauge(
+                      gaugeSize: 200,
+                      segments: [
+                        GaugeSegment('Low', 30, Colors.green),
+                        GaugeSegment('Medium', 50, Colors.orange),
+                        GaugeSegment('High', 80, Colors.red),
+                      ],
+                      currentValue: cpu,
+                      displayWidget: const Text(
+                        'Jetson CPU',
+                        style: TextStyle(
+                          fontSize: 12,
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              }),
+            ),
             const SizedBox(
               width: 24,
             ),
-            Consumer(builder: (context, ref, _) {
-              final gpu = ref.watch(gpuTempData);
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text(
-                    "GPU 온도",
-                    style: TextStyle(
-                      fontSize: 32,
-                    ),
-                  ),
-                  Text(
-                    "$gpu 도",
-                    style: const TextStyle(
-                      fontSize: 48,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  PrettyGauge(
-                    gaugeSize: 200,
-                    segments: [
-                      GaugeSegment('Low', 30, Colors.green),
-                      GaugeSegment('Medium', 50, Colors.orange),
-                      GaugeSegment('High', 80, Colors.red),
-                    ],
-                    currentValue: gpu,
-                    displayWidget: const Text(
-                      'Jetson GPU',
+            Expanded(
+              child: Consumer(builder: (context, ref, _) {
+                final gpu = ref.watch(gpuTempData);
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text(
+                      "GPU 온도",
                       style: TextStyle(
-                        fontSize: 12,
+                        fontSize: 32,
                       ),
                     ),
-                  ),
-                ],
-              );
-            }),
+                    Text(
+                      "$gpu 도",
+                      style: const TextStyle(
+                        fontSize: 48,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    PrettyGauge(
+                      gaugeSize: 200,
+                      segments: [
+                        GaugeSegment('Low', 30, Colors.green),
+                        GaugeSegment('Medium', 50, Colors.orange),
+                        GaugeSegment('High', 80, Colors.red),
+                      ],
+                      currentValue: gpu,
+                      displayWidget: const Text(
+                        'Jetson GPU',
+                        style: TextStyle(
+                          fontSize: 12,
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              }),
+            ),
           ],
         ),
       ),
