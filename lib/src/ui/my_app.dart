@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_io_extended_2022/src/provider/ros_cli_manager.dart';
+import 'package:flutter_io_extended_2022/src/provider/temperature_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/foundation.dart';
 
@@ -81,13 +82,15 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
+            Consumer(builder: (context, ref, _) {
+              final cpu = ref.watch(cpuTempData);
+              return Text(
+                "$cpu 도",
+                style: TextStyle(
+                  fontSize: 48,
+                ),
+              );
+            }),
           ],
         ),
       ),

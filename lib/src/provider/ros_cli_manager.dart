@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_io_extended_2022/src/model/ros_temperature_msg.dart';
+import 'package:flutter_io_extended_2022/src/provider/temperature_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:roslibdart/roslibdart.dart';
 
@@ -42,12 +44,16 @@ class RosCliManager {
   Future<void> cpuSubscribeHandler(Map<String, dynamic> msg) async {
     final msgReceived = json.encode(msg);
     debugPrint(msgReceived);
+    final tempMsg = RosTemperatureMsg.fromJson(msg);
+    ref(cpuTempData.notifier).state = tempMsg.temperature ?? 0.0;
     // setState(() {});
   }
 
   Future<void> gpuSubscribeHandler(Map<String, dynamic> msg) async {
     final msgReceived = json.encode(msg);
     debugPrint(msgReceived);
+    final tempMsg = RosTemperatureMsg.fromJson(msg);
+    ref(gpuTempData.notifier).state = tempMsg.temperature ?? 0.0;
     // setState(() {});
   }
 
