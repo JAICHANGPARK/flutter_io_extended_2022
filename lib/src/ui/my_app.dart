@@ -1,10 +1,10 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_io_extended_2022/src/provider/button_provider.dart';
 import 'package:flutter_io_extended_2022/src/provider/ros_cli_manager.dart';
 import 'package:flutter_io_extended_2022/src/provider/temperature_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter/foundation.dart';
 import 'package:pretty_gauge/pretty_gauge.dart';
 
 class MyApp extends StatelessWidget {
@@ -37,11 +37,6 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
 
   void _incrementCounter() {
     setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
       _counter++;
     });
   }
@@ -59,105 +54,109 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
-      body: Center(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Expanded(
-              child: Consumer(builder: (context, ref, _) {
-                final cpu = ref.watch(cpuTempData);
-                final time = ref.watch(cpuDateTime);
-                return Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text(
-                      "CPU 온도",
-                      style: TextStyle(
-                        fontSize: 32,
-                      ),
-                    ),
-                    Text(
-                      "$cpu C",
-                      style: const TextStyle(
-                        fontSize: 48,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Text(
-                      "$time nano second",
-                      style: const TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    PrettyGauge(
-                      gaugeSize: 200,
-                      segments: [
-                        GaugeSegment('Low', 30, Colors.green),
-                        GaugeSegment('Medium', 50, Colors.orange),
-                        GaugeSegment('High', 80, Colors.red),
-                      ],
-                      currentValue: cpu,
-                      displayWidget: const Text(
-                        'Jetson CPU',
-                        style: TextStyle(
-                          fontSize: 12,
+      body: Consumer(builder: (context, ref, _) {
+        final btnState = ref.watch(buttonStateProvider);
+        return Container(
+          color: btnState ? Colors.white : Colors.red[50],
+          child: Center(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Expanded(
+                  child: Consumer(builder: (context, ref, _) {
+                    final cpu = ref.watch(cpuTempData);
+                    final time = ref.watch(cpuDateTime);
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text(
+                          "CPU 온도",
+                          style: TextStyle(
+                            fontSize: 32,
+                          ),
                         ),
-                      ),
-                    ),
-                  ],
-                );
-              }),
-            ),
-            const SizedBox(
-              width: 24,
-            ),
-            Expanded(
-              child: Consumer(builder: (context, ref, _) {
-                final gpu = ref.watch(gpuTempData);
-                return Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text(
-                      "GPU 온도",
-                      style: TextStyle(
-                        fontSize: 32,
-                      ),
-                    ),
-                    Text(
-                      "$gpu 도",
-                      style: const TextStyle(
-                        fontSize: 48,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    PrettyGauge(
-                      gaugeSize: 200,
-                      segments: [
-                        GaugeSegment('Low', 30, Colors.green),
-                        GaugeSegment('Medium', 50, Colors.orange),
-                        GaugeSegment('High', 80, Colors.red),
-                      ],
-                      currentValue: gpu,
-                      displayWidget: const Text(
-                        'Jetson GPU',
-                        style: TextStyle(
-                          fontSize: 12,
+                        Text(
+                          "$cpu C",
+                          style: const TextStyle(
+                            fontSize: 48,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                    ),
-                  ],
-                );
-              }),
+                        Text(
+                          "$time nano second",
+                          style: const TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        PrettyGauge(
+                          gaugeSize: 200,
+                          segments: [
+                            GaugeSegment('Low', 30, Colors.green),
+                            GaugeSegment('Medium', 50, Colors.orange),
+                            GaugeSegment('High', 20, Colors.red),
+                          ],
+                          currentValue: 40,
+                          displayWidget: const Text(
+                            'Jetson CPU',
+                            style: TextStyle(
+                              fontSize: 12,
+                            ),
+                          ),
+                        ),
+                      ],
+                    );
+                  }),
+                ),
+                const SizedBox(
+                  width: 24,
+                ),
+                Expanded(
+                  child: Consumer(builder: (context, ref, _) {
+                    final gpu = ref.watch(gpuTempData);
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text(
+                          "GPU 온도",
+                          style: TextStyle(
+                            fontSize: 32,
+                          ),
+                        ),
+                        Text(
+                          "$gpu 도",
+                          style: const TextStyle(
+                            fontSize: 48,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        PrettyGauge(
+                          gaugeSize: 200,
+                          segments: [
+                            GaugeSegment('Low', 30, Colors.green),
+                            GaugeSegment('Medium', 50, Colors.orange),
+                            GaugeSegment('High', 20, Colors.red),
+                          ],
+                          currentValue: gpu,
+                          displayWidget: const Text(
+                            'Jetson GPU',
+                            style: TextStyle(
+                              fontSize: 12,
+                            ),
+                          ),
+                        ),
+                      ],
+                    );
+                  }),
+                ),
+              ],
             ),
-          ],
-        ),
-      ),
+          ),
+        );
+      }),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
         tooltip: 'Increment',
