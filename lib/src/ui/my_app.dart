@@ -5,6 +5,7 @@ import 'package:flutter_io_extended_2022/src/provider/ros_cli_manager.dart';
 import 'package:flutter_io_extended_2022/src/provider/temperature_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/foundation.dart';
+import 'package:pretty_gauge/pretty_gauge.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -89,6 +90,21 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                     style: const TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  PrettyGauge(
+                    gaugeSize: 200,
+                    segments: [
+                      GaugeSegment('Low', 30, Colors.green),
+                      GaugeSegment('Medium', 50, Colors.orange),
+                      GaugeSegment('High', 80, Colors.red),
+                    ],
+                    currentValue: cpu,
+                    displayWidget: const Text(
+                      'Jetson CPU',
+                      style: TextStyle(
+                        fontSize: 12,
+                      ),
                     ),
                   ),
                 ],
