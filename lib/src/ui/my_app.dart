@@ -60,7 +60,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
       body: Consumer(builder: (context, ref, _) {
         final btnState = ref.watch(buttonStateProvider);
         return Container(
-          color: btnState ? Colors.white : Colors.red[100],
+          color: btnState ? Colors.white : Colors.red[200],
           child: Center(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
