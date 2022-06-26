@@ -5,22 +5,23 @@ import 'package:roslibdart/roslibdart.dart';
 
 class RosCliManager {
   final ros = Ros(url: 'ws://127.0.0.1:9090');
-  Topic? temperatureTopic;
+  Topic? cpuTemperatureTopic;
+  Topic? gpuTemperatureTopic;
 
   initRos() async {
-    temperatureTopic = Topic(
+    cpuTemperatureTopic = Topic(
       ros: ros,
-      name: '/topic',
+      name: '/topic/temp/cpu',
       type: "sensor_msgs/Temperature",
       reconnectOnClose: true,
       queueLength: 10,
       queueSize: 10,
     );
     ros.connect();
-    await temperatureTopic?.subscribe(subscribeHandler);
+    await cpuTemperatureTopic?.subscribe(cpuSubscribeHandler);
   }
 
-  Future<void> subscribeHandler(Map<String, dynamic> msg) async {
+  Future<void> cpuSubscribeHandler(Map<String, dynamic> msg) async {
     final msgReceived = json.encode(msg);
     debugPrint(msgReceived);
     // setState(() {});
@@ -28,6 +29,6 @@ class RosCliManager {
 
   close() {
     ros.close();
-    temperatureTopic?.unsubscribe();
+    cpuTemperatureTopic?.unsubscribe();
   }
 }
