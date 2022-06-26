@@ -66,11 +66,13 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
       body: Center(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Consumer(builder: (context, ref, _) {
               final cpu = ref.watch(cpuTempData);
               final time = ref.watch(cpuDateTime);
               return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Text(
                     "CPU 온도",
@@ -116,6 +118,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
             Consumer(builder: (context, ref, _) {
               final gpu = ref.watch(gpuTempData);
               return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Text(
                     "GPU 온도",
@@ -128,6 +131,21 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                     style: const TextStyle(
                       fontSize: 48,
                       fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  PrettyGauge(
+                    gaugeSize: 200,
+                    segments: [
+                      GaugeSegment('Low', 30, Colors.green),
+                      GaugeSegment('Medium', 50, Colors.orange),
+                      GaugeSegment('High', 80, Colors.red),
+                    ],
+                    currentValue: gpu,
+                    displayWidget: const Text(
+                      'Jetson GPU',
+                      style: TextStyle(
+                        fontSize: 12,
+                      ),
                     ),
                   ),
                 ],
